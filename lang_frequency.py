@@ -1,45 +1,37 @@
 import operator
 import re
+from collections import Counter
 
 
 def load_data(filepath):
     if filepath == "":
-        raise OSError("Пустой путь")
+        raise OSError("empty path")
     with open(filepath, "r", encoding="utf-8") as text_file:
         return text_file.read()
 
 
 def get_most_frequent_words(text):
     words = re.sub(r"\W", " ", text).split(" ")
-    words_with_frequency = dict()
+    words_with_frequency = Counter()
     for word in words:
-        if word != "" and word in words_with_frequency:
+        if word != "":
             words_with_frequency[word] += 1
-        elif word != "":
-            words_with_frequency[word] = 1
-    sorted_words_list = sorted(
-        words_with_frequency.items(),
-        key=operator.itemgetter(1),
-        reverse=True,
-        )
-    return sorted_words_list
+    return words_with_frequency
 
 
 def print_most_frequent_words(most_frequent_words, limit=10):
     if limit > 0:
         print("\nСлова:")
-        for id in range(limit):
-            word = most_frequent_words[id][0]
-            count = most_frequent_words[id][1]
-            print("{} - {}".format(word, count))
+        for word_with_counter in most_frequent_words.most_common(limit):
+            print("{} - {}".format(word_with_counter[0], word_with_counter[1]))
 
 
 def main():
     try:
-        path_to_text = input(">Введите путь к текстовому файлу:")
+        path_to_text = input(">Type path to your text: some.txt:")
         text = load_data(path_to_text)
         most_frequent_words = get_most_frequent_words(text)
-        words_limit_to_print = int(input(">Сколько слов вывести максимум?:"))
+        words_limit_to_print = int(input(">Limit of words to print:"))
     except OSError as err:
         print("{}".format(err))
     except ValueError as err:
