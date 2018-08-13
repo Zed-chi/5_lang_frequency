@@ -1,4 +1,5 @@
 import re
+import sys
 from collections import Counter
 
 
@@ -9,35 +10,35 @@ def load_data(filepath):
         return text_file.read()
 
 
-def get_most_frequent_words(text):
+def get_most_frequent_words(text, limit):
     words = re.sub(r"\W", " ", text).split(" ")
-    words_with_frequency = Counter()
-    for word in words:
-        if word != "":
-            words_with_frequency[word] += 1
-    return words_with_frequency
+    words_with_frequency = Counter([word for word in words if word != ""])
+    return words_with_frequency.most_common(limit) if limit > 0 else None
 
 
-def print_most_frequent_words(most_frequent_words, limit=10):
-    if limit > 0:
-        print("\nСлова:")
-        for word_with_counter in most_frequent_words.most_common(limit):
-            print("{} - {}".format(word_with_counter[0], word_with_counter[1]))
+def print_most_frequent_words(most_frequent_words):
+    print("\nСлова:")
+    for word, counter in most_frequent_words:
+        print("{} - {}".format(word, counter))
 
 
 def main():
     try:
-        path_to_text = input(">Type path to your text: some.txt:")
+        if len(sys.argv) > 1:
+            path_to_text = sys.argv[1]
+        else:
+            exit("Empty path")
         text = load_data(path_to_text)
-        most_frequent_words = get_most_frequent_words(text)
-        words_limit_to_print = int(input(">Limit of words to print:"))
+        words_limit = int(input(">Limit of words to print:"))
+        # вот тут value error
+        most_frequent_words = get_most_frequent_words(text, words_limit)
     except OSError as err:
         print("{}".format(err))
     except ValueError as err:
         print("{}".format(err))
     else:
-        print_most_frequent_words(most_frequent_words, words_limit_to_print)
+        print_most_frequent_words(most_frequent_words)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
