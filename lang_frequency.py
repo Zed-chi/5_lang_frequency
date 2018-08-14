@@ -13,7 +13,7 @@ def load_data(filepath):
 def get_most_frequent_words(text, limit):
     words = re.findall(r"[a-zA-Zа-яА-Я]+", text)
     words_with_frequency = Counter(words)
-    return words_with_frequency.most_common(limit) if limit > 0 else None
+    return words_with_frequency.most_common(limit) if limit > 0 and len else []
 
 
 def print_most_frequent_words(most_frequent_words):
