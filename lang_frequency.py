@@ -24,13 +24,12 @@ def print_most_frequent_words(most_frequent_words):
 
 def main():
     try:
-        if len(sys.argv) > 1:
+        if len(sys.argv) == 3:
             path_to_text = sys.argv[1]
+            words_limit = int(sys.argv[2])
         else:
-            exit("Empty path")
+            exit("Invalid arguments")
         text = load_data(path_to_text)
-        words_limit = int(input(">Limit of words to print:"))
-        # вот тут value error
         most_frequent_words = get_most_frequent_words(text, words_limit)
     except OSError as err:
         print("{}".format(err))
