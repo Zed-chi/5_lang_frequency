@@ -30,7 +30,7 @@ def main():
         words_count = None
         if len(sys.argv) == 3:
             words_count = int(sys.argv[2])
-        if len(sys.args) == 2:
+        if len(sys.argv) >= 2:
             path_to_text = sys.argv[1]
         else:
             exit("Empty Path")
@@ -39,10 +39,11 @@ def main():
     except OSError as err:
         print("{}".format(err))
     except ValueError as err:
-        print("{}".format(err))
+        print("words count parsing error")
     else:
         print_most_frequent_words(most_frequent_words)
 
 
 if __name__ == "__main__":
     main()
+
