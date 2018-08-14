@@ -8,9 +8,9 @@ Prints most frequent words with its frequency in provided text
   
   Example in linux:
 ```bash
-$ python lang_frequency.py <path_to_textfile> <words_count_to_print>/or leave blank to print whole list
+$ python lang_frequency.py -p <path_to_textfile> -c <words_count_to_print>/or leave blank to print whole list
 
-$python lang_frequency.py python_wiki.txt 3
+$python lang_frequency.py -p python_wiki.txt -c 3
 Words:
 Python - 279
 is - 100
