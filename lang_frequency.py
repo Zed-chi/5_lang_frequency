@@ -4,7 +4,7 @@ from collections import Counter
 
 
 def load_data(filepath):
-    if filepath == "":
+    if not filepath:
         raise OSError("empty path")
     with open(filepath, "r", encoding="utf-8") as text_file:
         return text_file.read()
