@@ -10,10 +10,13 @@ def load_data(filepath):
         return text_file.read()
 
 
-def get_most_frequent_words(text, limit):
+def get_most_frequent_words(text, words_count):
     words = re.findall(r"[a-zA-Zа-яА-Я]+", text)
     words_with_frequency = Counter(words)
-    return words_with_frequency.most_common(limit) if limit > 0 and len else []
+    if words_count is None or words_count > 0:
+        return words_with_frequency.most_common(words_count)
+    else:
+        return []
 
 
 def print_most_frequent_words(most_frequent_words):
@@ -24,13 +27,15 @@ def print_most_frequent_words(most_frequent_words):
 
 def main():
     try:
+        words_count = None
         if len(sys.argv) == 3:
+            words_count = int(sys.argv[2])
+        if len(sys.args) == 2:
             path_to_text = sys.argv[1]
-            words_limit = int(sys.argv[2])
         else:
-            exit("Invalid arguments")
+            exit("Empty Path")
         text = load_data(path_to_text)
-        most_frequent_words = get_most_frequent_words(text, words_limit)
+        most_frequent_words = get_most_frequent_words(text, words_count)
     except OSError as err:
         print("{}".format(err))
     except ValueError as err:
