@@ -22,16 +22,17 @@ def print_most_frequent_words(most_frequent_words):
         print("{} - {}".format(word, count))
 
 
-def main():
+def get_arguments():
     parser = argparse.ArgumentParser(description='Word_frequency script')
-    parser.add_argument('-p', action="store", dest="path_to_text")
-    parser.add_argument('-c', action="store", dest="count_of_words", type=int)
+    parser.add_argument('-p', required=True, dest="path_to_text")
+    parser.add_argument('-c', default=10, dest="count_of_words", type=int)
     args = parser.parse_args()
+    return args.count_of_words, args.path_to_text
+
+
+def main():
     try:
-        words_count = args.count_of_words
-        path_to_text = args.path_to_text
-        if path_to_text is None:
-            exit("Empty Path")
+        words_count, path_to_text = get_arguments()
         text = load_data(path_to_text)
         most_frequent_words = get_most_frequent_words(text, words_count)
     except OSError as err:
